@@ -1,0 +1,15 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image:  url("/images/matthew-kane-205770.jpg");
+  background-color: DarkGrey;
+  background-size: cover;
+}
+
+h1 {
+  color: DarkRed;
+}
+
+a {
+  color: #00B7FF;
+}
