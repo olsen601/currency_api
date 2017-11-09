@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 var request = require('request');
 
 var baseURL = 'https://openexchangerates.org/api/latest.json';
@@ -24,3 +25,10 @@ function getExchangeRates(oxrJSON){
   return rates;
 }
 module.exports = getExchangeRates;
+=======
+
+module.exports = {
+  EUR: 0.846,
+  CNY: 6.751
+};
+>>>>>>> parent of 6587fa3... add description for lab 7
