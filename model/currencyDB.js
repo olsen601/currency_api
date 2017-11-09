@@ -1,19 +1,26 @@
-/*var request = require('request');
-var moment = require('moment');
+var request = require('request');
 
 var baseURL = 'https://openexchangerates.org/api/latest.json';
 
-function oxrRequest(callback)
+var queryParam = {};
 var APIKEY = process.env.OXR_API_KEY;
-function getExchangeRates(toCurrency){
-  GET(baseURL, {app_id: APIKEY, base: USD, symbols: toCurrency});
-  var OXRJSON = JSON.parse(body);
 
+queryParam = {'api_id' : APIKEY, "base" : "USD"};
+
+var oxrJSON;
+
+request( {uri : baseURL, qs : queryParam}, function(oxr_response, body){
+    oxrJSON = JSON.stringify(body);
+
+    var jsonForTemplate = getExchangeRates(oxrJSON);
+});
+
+
+var rates = {};
+
+function getExchangeRates(oxrJSON){
+
+  oxrJSON.rates = rates;
+  return rates;
 }
-module.exports = getExchangeRates;*/
-module.exports = {
-  EUR: 0.86,
-  CNY: 6.751,
-  JPY: 113.87,
-  USD: 1
-};
+module.exports = getExchangeRates;
