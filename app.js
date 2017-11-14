@@ -4,10 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var exchangeRates = require('./model/currencyDB');
 
 var index = require('./routes/index');
 
 var app = express();
+
+exchangeRates.getRates( function(err){
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,7 +25,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -40,6 +42,9 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+
 });
 
 module.exports = app;
