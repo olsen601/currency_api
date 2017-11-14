@@ -1,34 +1,46 @@
-<<<<<<< HEAD
 var request = require('request');
-
 var baseURL = 'https://openexchangerates.org/api/latest.json';
 
-var queryParam = {};
 var APIKEY = process.env.OXR_API_KEY;
+var queryParam = {'app_id' : ''+APIKEY+'', 'base': 'USD', 'symbols': 'USD,EUR,CNY,JPY'};
 
-queryParam = {'api_id' : APIKEY, "base" : "USD"};
+var json;
 
-var oxrJSON;
+function oxrRequest(callback){
 
-request( {uri : baseURL, qs : queryParam}, function(oxr_response, body){
-    oxrJSON = JSON.stringify(body);
+  request({uri:baseURL, qs:queryParam}, function(err, res, body) {
 
-    var jsonForTemplate = getExchangeRates(oxrJSON);
-});
-
-
-var rates = {};
-
-function getExchangeRates(oxrJSON){
-
-  oxrJSON.rates = rates;
-  return rates;
+      if (!err && res.statusCode == 200){
+        json = JSON.parse(body);
+        json = json.rates;
+        var jsonForTemplate = getExchangeRates(json);
+        if(callback){callback(null, jsonForTemplate);}
+      }
+      else {
+        console.log("Error in JSON request: " + err);
+        console.log(res+" res");
+        console.log(body+" body");
+        if(callback){callback(Error("Error fetching data from the OXR service"));}
+      }
+    });
 }
-module.exports = getExchangeRates;
-=======
 
-module.exports = {
-  EUR: 0.846,
-  CNY: 6.751
-};
->>>>>>> parent of 6587fa3... add description for lab 7
+function getExchangeRates(json){
+  console.log(json+"json");
+  return json;
+}
+
+var rates = setTimeout(function(){oxrRequest();}, 1000);
+console.log(rates+ " dodododo");
+//module.exports = rates;
+
+  // oxrJSON = JSON.stringify(data);
+  // var jsonForTemplate = getExchangeRates(oxrJSON);
+// var rates = {};
+//
+// function getExchangeRates(oxrJSON){
+//
+//   rates = oxrJSON;
+//   console.log(oxrJSON);
+//   return rates;
+// }

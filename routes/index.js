@@ -19,15 +19,17 @@ router.get('/about', function(req, res, next) {
 /* GET convert page */
 router.get('/convert', function(req, res, next){
 
-  var dollars = req.query.dollars;   // How many dollars?
+  var principle = req.query.principle;   // initial amount?
+  var fromCurrency = req.query.from_currency; // from what currency?
   var toCurrency = req.query.to_currency;  // To what currency?
 
-  var converted = dollars * exchangeRates[toCurrency];   // math!
+  var converted = Math.round(((principle / exchangeRates[fromCurrency]) * exchangeRates[toCurrency])*100)/100;   // math!
 
   res.render('results', {
-    dollars: dollars,
-    toCurrency: toCurrency,
-    converted: converted}
+    principle: principle,
+    fromCurrency: fromCurrency,
+    converted: converted,
+    toCurrency: toCurrency}
   );
 
 });
