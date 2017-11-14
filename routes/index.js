@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var exchangeRates = require('../model/currencyDB');
-
+var converter = require('../model/currencyDB');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -23,7 +22,11 @@ router.get('/convert', function(req, res, next){
   var fromCurrency = req.query.from_currency; // from what currency?
   var toCurrency = req.query.to_currency;  // To what currency?
 
-  var converted = Math.round(((principle / exchangeRates[fromCurrency]) * exchangeRates[toCurrency])*100)/100;   // math!
+  //var converted = Math.round(((principle / exchangeRates[fromCurrency]) * exchangeRates[toCurrency])*100)/100;   // math!
+
+  converted = converter.convert(fromCurrency, toCurrency, principle);
+
+  console.log(converted);
 
   res.render('results', {
     principle: principle,
